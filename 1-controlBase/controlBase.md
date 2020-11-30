@@ -112,6 +112,8 @@ _Fuera de Pure Data_
 
 * **Lápiz y goma**. Eventualmente querrá hacer anotaciones sobre estas hojas, por ello se recomiendan herramientas con las que pueda corregir fácilmente.
 
+<img src="materialesPd.jpg" width="360" alt="dibujo-de-objetos-matrices-mensajes-interfaces">
+
 _Dentro de Pure Data_
 
 Estos materiales los puede obtener a través del menú “Poner” o “Put”.
@@ -154,11 +156,15 @@ Active el modo de edición y cree el objeto [expr]. Con él podrá evaluar expre
 
 $f1 será la variable en la cual asignará los bpm que desea transformar.
 
+<img src="receta1-img1.jpg" width="360" alt="dibujo-de-reloj-en-pd-1">
+
 Conecte la caja de número a la entrada de [expr]. Por la salida del objeto [expr] obtendrá el resultado de la conversión. Conecte esta salida a la entrada derecha de un objeto [metro] y agregue a éste un [toggle] por la entrada izquierda. Conecte de la salida de [metro] un [bng].
 
 Ahora inactive el modo de edición y coloque su puntero sobre la caja de número, dé clic y escriba la cifra _120_. Presione la tecla Enter en su teclado. Posiciónese sobre [toggle] y dé clic. Verá parpadear el objeto [bng]. 
 
 Esta es la forma más sencilla de construir un reloj en el que exprese el tiempo en bpm. Sin embargo, probablemente quiera contar con la posibilidad de alternar entre dos o más subdivisiones del tiempo. Al añadir el resto de los materiales logrará cambiar entre cuartos y octavos rápidamente.
+
+<img src="nota1.jpg" width="360" alt="dibujo-de-cuartos-y-octavos">
 
 Cree el objeto [/] con el argumento _2_ y conéctelo entre la salida de [expr] y la entrada derecha del nuevo objeto [metro]. Ahora la expresión _60000/$f1_ pasará hacia dos lugares distintos y asignará a cada objeto [metro] un valor que conserva una distancia simétrica respecto del otro.
 
@@ -168,9 +174,13 @@ Los operadores [==] definen si el mensaje que pasa por ellos es igual a su argum
 
 [spigot] dejará pasar los mensajes que llegan por su entrada izquierda, sólo si su argumento cambia a _1_, lo cual sucede cuando [hradio] produce un mensaje igual al argumento de algún operador [==].
 
+<img src="nota2.jpg" width="360" alt="dibujo-de-objeto-spigot">
+
 Para finalizar conecte la salida de un objeto [metro] a la entrada izquierda de un objeto [spigot]. Haga lo mismo con el otro par y conecte ambas salidas de los objetos [spigot] a [bng]. Inactive el modo de edición y encienda el reloj a través de [toggle], dé clic en las diferentes casillas de [hradio] y verá en [bng] el cambio de la frecuencia con la que parpadea.
 
 Utilice la caja de número para monitorear cada mensaje en el sistema. Extienda este reloj agregando más subdivisiones, por ejemplo semicorcheas o fusas.
+
+<img src="receta1-img2.jpg" width="360" alt="dibujo-de-reloj-en-pd-2">
 
 ---
 
@@ -182,7 +192,7 @@ _Pure Data 0.49.1_
 Materiales:
 
 * 1 [+]
-* 1 [- ]
+* 1 [-]
 * 1 [select]
 * 2 [float]
 * 2 [bng]
@@ -195,11 +205,15 @@ A cada segundo en un minuto le corresponde un único número en ese lapso de tie
 
 Primero inicie en un valor, por ejemplo: 0. A este valor será necesario sumarle de uno en uno. Para ello conecte el primer [bng] a la entrada izquierda de un objeto [float] con el argumento _0_, recuerde que el modo de edición debe estar activo. Después conecte un operador aritmético binario [+] con el argumento _1_. Envíe la salida del operador [+ 1] a la entrada izquierda de [float 0] para actualizar su argumento y prepararlo para el siguiente clic. Termine con una caja de número después del operador [+ 1].
 
+<img src="receta2-img1.jpg" width="360" alt="dibujo-de-contador-en-pd-1">
+
 Al dar clic sobre [bng] con el modo de edición inactivo, la caja de número mostrará un resultado al que se le agregará 1 por cada clic. No importa cuántos clics se realicen, el número seguirá incrementando sin ningún límite. Deberá hacer algunos cambios para lograr que el contador vuelva al valor mínimo después de alcanzar un valor máximo. Active el modo de edición.
 
 Agregue el objeto [select], el cual le permitirá evaluar una variable en relación a su argumento. Este objeto será el filtro con el que se decidirá si la operación debe continuar escalando de 1 en 1 o bien, si deberá regresar al valor inicial.
 
 [select] cuenta con dos salidas: la izquierda producirá un bang cada vez que el valor enviado por su entrada izquierda coincida con su argumento; mientras que la derecha pasará el valor evaluado sin ningún cambio cada vez que esta condición no se cumpla. Elija un número límite para el contador y escríbalo en el objeto [select] como argumento, por ejemplo 7. Conecte la salida de [+ 1] a la entrada izquierda de [select 7].
+
+<img src="receta2-img2.jpg" width="360" alt="dibujo-de-contador-en-pd-2">
 
 Cuando el resultado del operador coincida con el argumento del filtro seleccionador, el contador se reiniciará. Cuando no lo sea, continuará con la suma.
 
@@ -216,9 +230,14 @@ Redefinir el límite mínimo requiere algunos pasos más que cuando se asigna de
 Escriba dentro _set $1_ y conéctela a la caja de mensaje que actualiza [float 0]. Inactive el modo de edición, ajuste los límites y dé clic sobre [bng]. Note que los límites ajustables a través de las cajas de número están incluidos en el intervalo de valores que produce el contador.
 Gracias al operador [- 1], es innecesario preocuparse por no ver reflejado en la cuenta el valor mínimo que ingresa por la caja de número.
 
+<img src="nota3.1.jpg" width="360" alt="ilustración-de-intervalo-cerrado">
+<img src="nota3.2.jpg" width="360" alt="descripción-intervalo">
+
 El detalle final, regresar al valor mínimo tras cumplirse algún otro condicional, es muy fácil de agregar. Lo único que debe hacer es capturar el resultado del operador [- 1] en un nuevo objeto [float] a través de su entrada derecha, conectar un [bng] por la entrada izquierda y enviar la salida del nuevo [float] a la entrada izquierda de [float 0].
 
 Con el modo de edición desactivado, ajuste de nuevo los límites, comience a contar y a mitad del ciclo dé clic en el [bng] que reinicia el contador. Al continuar con la cuenta verá que el algoritmo ha regresado al valor mínimo.
+
+<img src="receta2-img3.jpg" width="360" alt="dibujo-de-contador-en-pd-3">
 
 ---
 
@@ -247,17 +266,25 @@ Después deberá dividir la lista derecha a partir del índice 1. La lista izqui
 
 Como ejemplo, se obtiene aquí el índice 2 de la lista _1 2 3 4 5 6_. Primero la lista es dividida a partir del índice 2: 
 
+<img src="receta3-img1.jpg" width="360" alt="ilustración-división-de-listas-1">
+
 Se utiliza la parte de la derecha y es dividida a partir del índice 1: 
+
+<img src="receta3-img2.jpg" width="360" alt="ilustración-división-de-listas-2">
 
 Se toma la parte izquierda. El índice 2 de la lista _1 2 3 4 5 6_ es efectivamente 3.
 
 En Pure Data se ve de la siguiente forma:
+
+<img src="receta3-img3.jpg" width="360" alt="dibujo-división-de-listas-en-pd-1">
 
 Note los argumentos de los objetos [list], ambos están inicializados con _split_, una función que le permite dividir a las listas en dos. Sólo uno de esos objetos tiene también como argumento el valor _1_. Esto indica el índice por el cual la lista será nuevamente dividida. Hay tres salidas del objeto [list split], la izquierda corresponde a la parte izquierda de la lista dividida, mientras que la de en medio a la parte derecha. Por la tercera salida pasará la lista entera si hay menos índices de los que el argumento indica.
 
 El primer objeto [list split] requiere que indique el índice por el cual el objeto dividirá la lista, por ello debe conectar [trigger] con los argumentos _b_ y _f_ a [list split] por su entrada derecha y a la caja de mensaje que contiene la lista a evaluar.
 
 Los argumentos _b_ y _f_ se traducen a _bang_ y _float_. Cuando ingrese un valor por la caja de número superior, el objeto [trigger] pasará su valor primero como float y milisegundos después como bang, de esta forma permitirá ordenar los eventos y evitar un comportamiento errado.
+
+<img src="nota4.jpg" width="360" alt="dibujo-de-objeto-trigger">
 
 Los valores 0, 1, 2, 3, 4 y 5 recuperan un dato específico en la lista _1 2 3 4 5 6_. Al ingresar el valor 6 a la caja de número superior, no se obtiene ningún dato de la lista porque el índice 6 no existe. En caso de ingresar un número negativo, el sistema lo considerará como 0 y regresará el dato _1_. 
 
@@ -267,7 +294,11 @@ Para ello agregue el resto de los ingredientes de la siguiente manera:
 
 El operador binario [< 0] generará 1 sólo si el valor ingresado por su entrada izquierda es menor a 0, es decir, negativo. 
 
+<img src="receta3-img4.jpg" width="360" alt="dibujo-división-de-listas-en-pd-2">
+
 El objeto [list prepend] se encargará de agregar el resultado de la evaluación de [< 0] al principio de lista. Quedará _0 1 2 3 4 5 6_ cuando el valor ingresado por la caja de número sea mayor o igual a 0, o bien, _1 1 2 3 4 5 6_ cuando el valor sea menor a 0. Note que ahora cuenta con siete índices. Esto no resulta problemático gracias a [route 0], que dejará pasar la lista por su salida izquierda sólo cuando ésta empiece en 0, eliminando a la vez el primer dato. 
+
+<img src="nota5.jpg" width="360" alt="ilustración-del-objeto-route">
 
 Esta receta opera muy bien en conjunto con el contador para generar secuencias percusivas si los valores en la lista son binarios, por ejemplo ceros y unos, o secuencias melódicas si los valores en la lista son frecuencias. Muy pronto será introducido a voces afinadas, por el momento intente conectar ambas recetas juntas de manera que el contador avance tras cada clic un índice.
 
@@ -300,6 +331,8 @@ o se interactúa con ellos.
 
 Las conexiones entre objetos de audio también son diferentes y verá que los cables que los unen son más gruesos. Los objetos de control no siempre son compatibles con los de audio, sin embargo, esto no complica el flujo de trabajo. Las señales de audio en Pure Data serán siempre calibradas en valores de _-1_ a _1_. Al amplificar una señal de audio, _0_ representará el silencio porque la distancia entre las crestas o valles de una onda y el punto de equilibrio es nula.
 
+<img src="nota6.jpg" width="360" alt="ilustración-amplitud-y-punto-de-equilibrio">
+
 Sea precavido al experimentar con los volúmenes de esta receta y de preferencia no use audífonos inmediatamente.
 
 Comience por encender el DSP en Pure Data. Después cree el oscilador [osc~] y asígnele una frecuencia en nota MIDI: Use una caja de mensaje con el valor _69_ y conéctela al objeto [mtof], el cual transformará la nota 69 a Hertz. 
@@ -308,15 +341,21 @@ Conecte [mtof] a la entrada izquierda de [osc~]. Inactive el modo de edición y 
 
 Trabajar con notas MIDI es más fácil porque las notas están representadas de forma lineal, mientras que en Hertz las notas están distribuidas de forma exponencial. Un semitono arriba de A4, será en MIDI la nota 70, es decir, A#4 o Bb4.
 
+<img src="nota7.jpg" width="360" alt="comparación-frecuencias-en-Herz-y-notas-MIDI">
+
 Después de [osc~] añada el objeto [*~] con argumento _0.5_. Disminuya el volumen de salida de su ordenador o interfaz de audio y dirija la salida de [*~ 0.5] a cada entrada del objeto [dac~]. Incremente el volumen de salida de su ordenador o interfaz de audio hasta un nivel confortable.
 
 El objeto [*~ 0.5] funciona como un amplificador. El argumento _0.5_ indica que la salida del oscilador está ajustada a un 50% del nivel máximo. El objeto [dac~] es el convertidor de audio digital a análogo que le permite escuchar lo que sucede en Pure Data a través de sus bocinas.
 
 El sonido creado por el oscilador será continuo a menos que desconecte el amplificador de [dac~] u [osc~] del amplificador. Para moldear el sonido de percusión necesitará crear una envolvente que controle el amplificador. 
 
+<img src="receta4-img1.jpg" width="360" alt="dibujo-de-oscilador-amplificado-en-pd">
+
 Active el modo de edición, borre los argumentos de [*~] y conecte por la entrada derecha el objeto [line~]. Este objeto creará una rampa entre dos valores en un determinado tiempo. Para iniciar una rampa debe ingresar un valor meta y el tiempo en que desea que el objeto llegue a ese valor. Conecte por la entrada izquierda de [line~] una caja de mensaje con los valores _0.5_ y _1_. Donde 0.5 será el punto meta y 1 el tiempo en milisegundos. Al dar clic en esta caja de mensaje, el amplificador incrementará su volumen de 0 a 0.5 en 1 milisegundo. Lo cual puede corresponder al golpe de una baqueta sobre un tambor. Sin embargo, el tambor no permanece activado infinitamente, sino que decae hasta el silencio. Para lograr este segundo momento, añada la última caja de mensaje con los valores _0_ y _80_. Esto quiere decir que al dar clic en el nuevo mensaje, [line~] volverá a 0 en 80 milisegundos y el sonido se detendrá. 
 
 Como estos dos eventos acontecen inmediatamente uno después el otro, deberá simplificarlo todo para que sucedan ambos eventos con sólo un clic. Conecte [bng] al objeto [trigger] con los argumentos _b_ y _b_. La salida derecha de [trigger] conéctela al mensaje de apertura de la envolvente, mientras que la salida izquierda deberá conectarla a un objeto [delay] con argumento _2_ y éste al mensaje de cierre de la envolvente.
+
+<img src="receta4-img2.jpg" width="360" alt="dibujo-de-percusión-en-pd">
 
 Al dar clic sobre [bng], el objeto [trigger] activará primero el mensaje que abre la envolvente e inmediatamente después activará el retraso de [delay] que dura tan sólo 1 milisegundo más que la primera rampa que hace [line~], para cerrar la envolvente y regresar el amplificador a 0.
 
@@ -327,6 +366,8 @@ Experimente con frecuencias más bajas y diferentes tiempos de duración de la e
 [^^^](#contenido)
 
 ## Para finalizar
+
+<img src="nota8.jpg" width="360" alt="sugerencia-de-conexión-de-patches-en-pd">
 
 Conecte las cuatro recetas entre sí, de manera tal que el reloj opere sobre el avance del contador y éste seleccione cada índice en una lista. Los índices en la lista los puede especificar manualmente al asignar notas MIDI. Por ejemplo: _60_, _42_, _65_ y _68_, que musicalmente se traducen a C4, F#2, F4 y G#4. Cada índice deberá ser asignado primero a la frecuencia del sintetizador de percusión y después deberá activar la envolvente. Use el objeto [t b f] para este procedimiento.
 
