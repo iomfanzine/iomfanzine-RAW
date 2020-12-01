@@ -31,19 +31,37 @@ En el mundo de las percusiones se suele afirmar que no es la nota lo que se toca
 
 Considere un compás de cuatro cuartos donde todas las notas son octavos. Cuente el compás como _1 (y) 2 (y) 3 (y) 4 (y)_ y aplauda conservando un mismo pulso.
 
+<img src="paraComenzar1-iom2BN.jpg" width="360" alt="dibujo-de-compás-de-octavos">
+
 En este caso, el ritmo indica que se debe aplaudir ocho veces de forma continua. Lea de la misma forma el compás siguiente:
+
+<img src="paraComenzar2-iom2BN.jpg" width="360" alt="dibujo-de-compás-de-octavos-con-silencio">
 
 En este ritmo, aplaudirá cuatro veces seguidas y luego permanecerá en silencio durante la cuenta de _3 (y) 4 (y)_.
 
 Intente ahora marcar con aplausos el siguiente ritmo:
 
+<img src="paraComenzar3-iom2BN.jpg" width="360" alt="dibujo-de-ritmo-con-tres-golpes">
+
 En este caso sólo aplaudirá tres veces: en el contratiempo del primer tiempo y en los tiempos fuertes _3_ y _4_. Note cómo la forma de las notas cambia. La representación gráfica del ritmo indica no sólo que se debe aplaudir tres veces, sino que se debe respetar la distancia entre cada aplauso. Los golpes y los silencios, juntos, forman el ritmo.
 
 Estos mismos compases pueden ser interpretados a través de listas de ceros y unos, donde los unos representan el impulso de energía (o golpe) y los ceros, el silencio que existe entre cada uno.
 
+<img src="paraComenzar4-iom2BN.jpg" width="360" alt="dibujo-de-ritmo-traducido-a-booleanos-1">
+
+<img src="paraComenzar5-iom2BN.jpg" width="360" alt="dibujo-de-ritmo-traducido-a-booleanos-2">
+
+<img src="paraComenzar6-iom2BN.jpg" width="360" alt="dibujo-de-ritmo-traducido-a-booleanos-3">
+
 Intente ahora escribir algunos ritmos en las siguientes casillas, considerando que se debe aplaudir la cantidad de veces que indicada. Como consejo, escriba primero en las casillas de forma aleatoria todos los unos que corresponden y rellene las demás con ceros.
 
 Observe la forma gráfica que adquieren las listas cuando contienen una cantidad mayor de unos; esta cualidad será trasladada a Pure Data mediante la receta [Saturación](#saturación). A pesar de que varias de las listas que escribió cuentan con la misma cantidad de unos, cada una es diferente; esta segunda cualidad será presentada como [Permutación aleatoria](#permutación-aleatoria). Con estas dos primeras recetas ya será capaz de crear numerosas variaciones rítmicas; sin embargo, aún necesita de voces de percusión. Con la receta [Bombo](#bombo) desarrollará una percusión sintetizada que le servirá de base para generar sonidos cortos más complejos.
+
+<img src="paraComenzar7-iom2BN.jpg" width="360" alt="espacio-de-dibujo-tres-aplausos">
+
+<img src="paraComenzar8-iom2BN.jpg" width="360" alt="espacio-de-dibujo-5-aplausos">
+
+<img src="paraComenzar9-iom2BN.jpg" width="360" alt="espacio-de-dibujo-7-aplausos">
 
 Hasta aquí la introducción, ¡prepárese para resolver estos emocionantes algoritmos en Pure Data!
 
@@ -93,6 +111,10 @@ Piense en una división. Cuando divide un número entre otro, obtiene dos result
 
 La primera vez que imprima, obtendrá una lista con el elemento 0. En la segunda ocasión obtendrá la lista 1 0. En la tercera se imprimirá la lista 2 1 0. Y así sucesivamente. Observe que los datos ingresados avanzan una posición tras cada iteración, de manera que en la primera impresión el dato _0_ se encuentra en el índice 0 de la lista, pero en la segunda impresión el índice 0 es ocupado por _1_, dejando a _0_ en el índice 1. En la tercera impresión, el índice 0 es ocupado por _2_, el índice 1 por _1_ y el índice 2 por _0_.
 
+<img src="satruraci%C3%B3n1-1BN.jpg" width="360" alt="dibujo-de-contador-en-pd">
+
+<img src="satruraci%C3%B3n1-2BN.jpg" width="360" alt="ilustración-concatenación-de-listas">
+
 Continúe dando clic en [bng]. Observe que la lista crece sin límite un índice con cada clic. En cambio, lo que se busca es obtener una lista finita con _n_ cantidad de unos. Vuelva a la idea principal y conserve la demostración anterior para futura referencia.
 
 Para lograr la cantidad finita que busca necesitará una pequeña combinación de varios objetos incluyendo uno llamado [until]. Este objeto envía la cantidad que se le indique de _bangs_ de forma ultra rápida y resulta muy conveniente cuando se requieren varias iteraciones de un mismo proceso de manera inmediata. [until] puede ser iniciado con un argumento; sin embargo, en esta receta el argumento a utilizar será una variable indicada con la interfaz gráfica de usuario [hradio].
@@ -101,6 +123,8 @@ Con el modo de edición activo, agregue estos dos elementos conectando la salida
 
 Agregue un objeto [t] y conéctelo a la salida de [hradio]. Desconecte [print unos] de [list]. Inserte otro objeto [list] y conecte la salida del primero a la entrada derecha del nuevo. Conecte a la salida del último objeto [list] el objeto [print unos]. El objeto [t] le ayudará a ordenar los diferentes eventos que deben suceder: el reinicio del arreglo [list]><[t l], el comienzo de disparos de [until] y la impresión de la última lista. El orden de los eventos será el mismo que se describe: primero un _bang_ a la entrada derecha del objeto [list] iterado para reiniciarlo, luego un _float_ a la entrada izquierda de [until] para que se efectúe la cantidad deseada de _bangs_, y al final un _bang_ a la entrada izquierda del último objeto [list] para imprimir la última lista guardada. Agregue los argumentos necesarios a [t] y conecte sus salidas a los objetos mencionados. Recuerde que el orden de los mensajes enviados por [t] sucede de derecha a izquierda.
 
+<img src="satruraci%C3%B3n2BN.jpg" width="360" alt="dibujo-de-patch-cuántos-unos">
+
 Con esta programación obtendrá la cantidad de unos que especifique a través de [hradio], a excepción de cuando éste es 0. Al dar clic sobre la primera casilla de izquierda a derecha de [hradio] obtiene la última lista creada; esto se debe a que, aunque reinicia el arreglo [list]><[t l], [until] recibe 0 como argumento, por lo que nunca acciona ningún _bang_. En cambio, el último objeto [list] de la cadena sí recibe un mensaje _bang_, y debido a que [until] nunca iteró el arreglo [list]><[t l], la lista a imprimir sigue siendo la última creada. Esto puede ser solucionado al agregar una puerta que permita el paso del dato, siempre y cuando éste no sea cero.
 
 Active el modo de edición y desconecte [hradio] de [t b f b]. Agregue un objeto [spigot] con argumento _0_. [spigot 0] no permite el paso de los datos ingresados por su entrada izquierda a menos que por su entrada derecha se le indique un valor que no sea cero. ¿Qué es lo que debe hacer primero? ¿Enviar la información y luego abrir la puerta, o al revés? 
@@ -108,6 +132,8 @@ Active el modo de edición y desconecte [hradio] de [t b f b]. Agregue un objeto
 Recuerde que los mensajes en Pure Data no son información continua, sino que se generan una sola vez a partir de un evento y se transforman al pasar de un objeto a otro o se detienen ante una barrera. No sucede lo mismo con los objetos de audio, que se mantienen activos desde el momento en que son colocados, mientras el procesador de señales digitales _DSP_ esté encendido. Usted está trabajando sólo con objetos de control de mensaje y puede darse cuenta de ello porque ninguno lleva en su nombre el signo de ~, como sería el caso de [osc~ 440]. 
 
 La respuesta a la pregunta sobre lo que debe hacer primero es que deberá evaluar el dato para asegurarse de que no sea cero y sólo después lo enviará a intentar cruzar la puerta. Inserte entonces un objeto _trigger_ de la siguiente manera: [t f f], conecte las salidas derecha e izquierda a las entradas correspondientes de [spigot 0]. Por la entrada de [t f f] deberá enviar el dato que se genera al usar [hradio].
+
+<img src="satruraci%C3%B3n3BN.jpg" width="360" alt="dibujo-de-patch-cuántos-unos-tinker">
 
 Recuerde el compás en el que aplaudía cuatro veces y se mantenía en silencio durante cuatro pulsos. La lista en ceros y unos se veía de la siguiente forma:
 
@@ -141,6 +167,8 @@ Programar en Pure Data la lista de ceros que se requiere a partir de la cantidad
 
 Para obtener la nueva lista de ceros que se requieren active el modo de edición, seleccione todos los objetos que se encuentran conectados para crear la lista de unos a excepción de [hradio], cópielos y péguelos junto a lo que ya tenía programado. Conecte el resultado de la resta al objeto [t f f] que corresponde a la creación de la lista de ceros. En esta nueva cadena, borre de la caja de mensaje el dato _1_ y escriba en su lugar _0_, cambie también [print unos] a [print ceros].
 
+<img src="satruraci%C3%B3n4BN.jpg" width="360" alt="dibujo-de-patch-cuántos-unos-cuántos-ceros">
+
 Salga del modo de edición y haga clic sobre [hradio]. Observe cómo en la consola de Pure Data se imprimen las listas de unos y ceros con la proporción adecuada.
 
 Lo único que falta para terminar de llevar a cabo esta receta es combinar ambas listas para preparar los datos a permutar. Para ello necesita un nuevo objeto [list], pero ahora con el argumento _store_. Este argumento inicializará el objeto [list] en la modalidad de concatenación de listas. Recuerde que normalmente en todos los objetos la entrada izquierda es caliente y el resto son frías. Aunque es posible guardar listas por ambas entradas de [list store], sólo la información que se introduzca por la entrada izquierda ocasionará una salida inmediata del contenido del objeto. Por lo tanto, deberá enviar primero una lista por la entrada derecha y luego por la izquierda. Para mantener cierto orden, la lista enviada a la entrada fría de [list store] será aquella que contiene los ceros. 
@@ -156,6 +184,7 @@ Desactive el modo de edición y haga clic sobre [hradio], recorriendo cada casil
 Con esta receta podrá generar listas con mayor o menor saturación de índices con el valor _1_. Experimente un poco con ella, trate de leerla índice por índice en Pure Data y asigne la lectura de los datos a un [tgl] para controlar la actividad de un objeto [metro]. Tome también
 un pequeño descanso antes de continuar con la siguiente receta.
 
+<img src="satruraci%C3%B3n3BN.jpg" width="360" alt="dibujo-de-patch-algoritmo-de-saturación-booleana">
 
 ---
 
@@ -247,13 +276,19 @@ Esta es una variante del algoritmo para desordenar los elementos de una lista qu
 
 Para comenzar, retome la receta Selección de índices de _[iom!] #1 Control Base_. Si no la tiene a la mano, puede consultarla aquí:
 
+<img src="permutaci%C3%B3nAleatoria1BN.jpg" width="360" alt="dibujo-de-patch-selección-de-índices-iom-control-base">
+
 Esta receta le permite obtener por la salida izquierda de [list split 1] cualquier dato que elija a través de [hradio] de la lista que pasa por la entrada derecha de [list]. Active el modo de edición en Pure Data, agregue un objeto [print] con el argumento _datoRemovido_ y conéctelo
 
 a la salida izquierda del objeto [list split 1]. Añada [list store] y conecte a su entrada caliente la salida de izquierda de [list split]; por la entrada fría conecte la segunda salida de [list split 1]. A través de estas conexiones recuperará el resto de la lista que no se había ocupado en la receta _Selección de índices_. Agregue otro objeto [print], esta vez con el argumento _datosRestantes_, y conéctelo a la salida izquierda de [list store].
 
 Para activar la selección aleatoria de un índice deshágase de [hradio]. Conecte en su lugar un [bng] y diríjalo a la entrada caliente de un objeto [random 8] y éste al objeto [t b f]. Salga el modo de edición, haga clic sobre la caja de mensaje que contiene la lista de números y luego presione [bng]. Observe que en la consola de Pure Data se imprime el dato que corresponde al índice aleatorio elegido por [random 8], así como una lista con los demás datos.
 
+<img src="permutaci%C3%B3nAleatoria2BN.jpg" width="360" alt="dibujo-de-patch-selección-aleatoria-de-índices">
+
 Para que los números se sigan descartando debe actualizar la lista _L_ guardada en el objeto [list], así como el intervalo semiabierto de números enteros que dispone [random 8] a partir de la longitud de la lista que imprime por [list store]. Active el modo de edición y desconecte [print datosRestantes]. Coloque un objeto [t l l l] en su lugar. A la salida derecha de este objeto vuelva a conectar [print datosRestantes] y envíe la salida de enmedio a la entrada izquierda de [list] para actualizar los datos disponibles. Para conocer la longitud de cualquier lista invoque el objeto [list length] y conecte a su entrada la salida izquierda del objeto [t l l l]. [random 8] deberá recibir el resultado de [list length] por su entrada fría. Desactive el modo de edición y haga clic sobre [bng]; la lista datosRestantes se hará cada vez más pequeña en la consola y _datoRemovido_ nunca se repetirá. Cuando _datosRestantes_ imprima _bang_ será necesario restaurar el algoritmo. Haga esto añadiendo un [bng] y una caja de mensaje con el dato _8_. Entre al modo de edición, conecte este [bng] a la caja de mensaje recién agregada y también a la caja de mensaje que contiene la lista de números. Salga del modo de edición, dé clic en éste nuevo [bng] y luego en el que se dirige a [random 8].
+
+<img src="permutaci%C3%B3nAleatoria3BN.jpg" width="360" alt="dibujo-de-patch-selección-aleatoria-de-índices-y-descartado">
 
 Ahora los datos ya son removidos de manera aleatoria, pero aún no son guardados de tal manera que generen una lista. Para ello, realice las conexiones que ya conoce para concatenar dato por dato en una lista: active el modo de edición, agregue un retorno de los objetos [list]><[t l] y conecte también la salida de [list] a la entrada izquierda de otro objeto [list], añada un [bng] a la entrada caliente de éste último [list]. Desconecte [print datosRestantes], cambie su argumento a _listaP_ y conéctelo al último objeto [list] que agregó. Desconecte también [print datoRemovido] y deséchelo. Conecte la salida izquierda de [list split 1] a la entrada caliente de [list] en el arreglo [list]><[t l]. 
 
@@ -262,6 +297,8 @@ Para acelerar el proceso de selección de índices de manera aleatoria, desconec
 Lo único que falta es sintetizar estos tres clics en uno solo que active todo el algoritmo y le permita permutar la lista de manera rápida las veces que se desee. Para ello, entre al modo de edición, agregue un último objeto [t] y un [bng]. Debido a que sólo se necesita ordenar tres bangs, los argumentos para [t] deben ser _b_, _b_ y _b_. Conecte [t b b b] respetando el orden de los eventos: reinicio, iteración e impresión. No olvide conectar [bng] a [t b b b]. Si lo desea, puede desechar los otros objetos [bng] anteriormente colocados, sólo mantenga el orden indicado. Desactive el modo de edición y haga clic sobre el [bng] superior. Observe en la consola cómo la lista es permutada tras cada _bang_.
 
 Como ejercicio, sustituya la lista 0 1 2 3 4 5 6 7 por una escala musical en valores MIDI y envíe los datos de la lista permutada a un oscilador en Pure Data. Haga uso de un contador y un objeto [mtof].
+
+<img src="permutaci%C3%B3nAleatoria4BN.jpg" width="360" alt="dibujo-de-patch-permutación-aleatoria">
 
 ---
 
@@ -299,6 +336,8 @@ Complete la envolvente agregando un [bng] conectado a un objeto [t] con los argu
 
 Para escuchar el efecto, construya una envolvente rápida para el amplificador [\*~]. Agregue de nuevo una caja de mensaje con los datos _1_ y _1_; conéctela a un nuevo objeto [line~] por su entrada caliente. Agregue un objeto [pack] con los argumentos _0_ y _80_. Mande [pack 0 80] también a la entrada caliente de [line~]. Añada un objeto [del] con el argumento _2_ y conéctelo a la entrada izquierda de [pack 0 80]. Conecte [line~] a la entrada derecha del último amplificador [\*~] y [bng] a la caja de mensaje con la lista _1 1_ y al objeto [del 2]. Esta envolvente de amplitud permitirá abrir el amplificador a su mayor potencia en el corto de tiempo de 1 milisegundo. 2 ms después será indicado que vuelva a _0_ en un intervalo de 80 milisegundos. Salga del modo de edición, ajuste el volumen de su ordenador o interfaz de audio a un nivel bajo y haga clic sobre [bng]. Suba lentamente el nivel de su equipo hasta que sea confortable.
 
+<img src="bombo1BN.jpg" width="360" alt="dibujo-de-patch-bombo-en-pd">
+
 Una mejora que puede realizarse para que el sonido de este bombo sea más flexible y manipulable es agregar una caja de número y conectarla a la entrada izquierda de [pack 0 80], con ello afectará el tiempo de decaimiento de la percusión sintetizada. Añada también un objeto [/] con el argumento _20_, conecte su salida a la entrada derecha de [pack 0 10]. Por la entrada caliente de [/ 20] envíe la misma caja de número que envió a [pack 0 80]. De esta manera al afectar el tiempo de decaimiento de la envolvente de amplitud, también actualiza el tiempo de decaimiento de la envolvente de frecuencia, dándole más carácter al sonido sintetizado.
 
 Con envolventes de este estilo usted puede complejizar los sonidos que los osciladores que Pure Data ofrecen. Experimente creando una envolvente que afecte la frecuencia de corte de un filtro pasa altos [hip~] con el que modula un generador de ruido blanco [noise~] y agregue una envolvente de amplitud. 
@@ -311,10 +350,11 @@ Con envolventes de este estilo usted puede complejizar los sonidos que los oscil
 
 Ha llegado el momento más emocionante: ¡Conectar todas las recetas juntas! Las listas que se generan al usar la receta [Saturación](#saturación) aparecen siempre ordenadas, reorganice de forma aleatoria los datos usando la receta [Permutación aleatoria](#permutación-aleatoria). Requerirá de un objeto [t] con los argumentos _b_ y _l_. Para leer las listas permutadas, necesitará la receta _Selección de índices_, que es el núcleo de [Permutación aleatoria](#permutación-aleatoria), y un contador, el cual realizó para entender cómo se concatenan las listas en el arreglo [list]><[t l]. Mande la lista permutada y el contador al selector de índices, de esta forma cada vez que avance la cuenta, se elegirá el índice correspondiente en la lista permutada. Permita que el contador avance en un intervalo de tiempo constante utilizando un objeto [metro], le sugiero que lo inicialice en 125 ms. Al final, envíe la salida de _Selección de índices_ a un objeto [sel] y active la percusión cada vez que el dato sea 1.
 
-Ya expuestas las recetas que conforman este número, _[iom!] #2 Densidad_ llega a su fin. Mas no se d      etenga aquí, aplique las recetas a otros algoritmos que haya realizado y problematice la situación: ¿Qué pasaría si lee ambos unos y ceros con dos sonidos distintos? ¿O si genera listas permutadas a partir de los datos 0, 1 y 2?, ¿Y si estas listas son el ritmo que estructura una melodía?
+<img src="paraFinalizar-iom2BN.jpg" width="360" alt="sugerencia-de-patch-recetas-densidad">
+
+Ya expuestas las recetas que conforman este número, _[iom!] #2 Densidad_ llega a su fin. Mas no se detenga aquí, aplique las recetas a otros algoritmos que haya realizado y problematice la situación: ¿Qué pasaría si lee ambos unos y ceros con dos sonidos distintos? ¿O si genera listas permutadas a partir de los datos 0, 1 y 2?, ¿Y si estas listas son el ritmo que estructura una melodía?
 
 Es un gusto enorme escribir para usted. ¡Disfrute y hasta la próxima!
-
 
 ---
 
